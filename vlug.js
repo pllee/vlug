@@ -116,7 +116,7 @@
         })();
 
         var timeStamp = (function() {
-            if(typeof performance !== 'undefined') {
+            if(typeof performance !== 'undefined'  && performance.now) {
                 return function() {
                     return performance.now();
                 };
