@@ -24,7 +24,7 @@
     var context = this,
     oldVlug = context.Vlug;
 
-Vlug = {};
+context.Vlug = {};
 
 Vlug.noConflict = function() {
     context.Vlug = oldVlug;
@@ -87,14 +87,14 @@ Vlug.initialContext = context;
 
         return function(arr) {
             return toString.call(arr) === '[object Array]';
-        }
+        };
     })();
 
     var arrayFrom = function(arrOrItem) {
             if(Vlug.utils.Array.isArray(arrOrItem)) {
                 return arrOrItem;
             }
-            return(typeof arrOrItem === 'undefined') ? [] : [arrOrItem]
+            return(typeof arrOrItem === 'undefined') ? [] : [arrOrItem];
         }
 
     var each = function(arrOrItem, fn, context) {
@@ -132,7 +132,7 @@ Vlug.initialContext = context;
     })();
 
     var timeStamp = (function() {
-        if(typeof performance !== 'undefined') {
+        if(typeof performance !== 'undefined' &amp;&amp; performance.now) {
             return function() {
                 return performance.now();
             };
@@ -294,7 +294,7 @@ Vlug.Runner.prototype = {
 
 <span id='Vlug-Runner-cfg-functions'>    /**
 </span>     * @cfg {Function|Function[]|{}|{}[]} functions
-     functions can either be Functions or objects in the form of :
+     functions can either be functions or objects in the form of :
      *@cfg functions.name {String} the identifier name for the function
      *@cfg functions.fn {Function} (required) the function to call 
      functions: {
@@ -335,7 +335,7 @@ Vlug.Runner.prototype = {
                 fn = functionOrObj.fn || functionOrObj;
             } else {
                 name = 'index:' + index;
-                fn = functionOrObj
+                fn = functionOrObj;
             }
 
             this._runFunction(fn, name);
@@ -430,7 +430,7 @@ Vlug.Interceptor = function(config) {
 Vlug.Interceptor.prototype = {
 <span id='Vlug-Interceptor-cfg-logs'>    /**
 </span>     * @cfg {{}| {}[]} logs
-     * An object or Array of objects in with the following properties
+     * An object or array of objects with the following properties
      * @cfg logs.obj {Object} (required) the object that has the function to show logs.
      * @cfg logs.fnName {String} (required) the name of the function to show logs.
      * @cfg logs.before {String|Function} the console output to log before the function is called.
@@ -456,7 +456,7 @@ Vlug.Interceptor.prototype = {
     
 <span id='Vlug-Interceptor-cfg-times'>    /**
 </span>     * @cfg {{}| {}[]} times
-     * An object or Array of objects in with the following properties
+     * An object or array of objects with the following properties
      * @cfg times.obj {Object} (required) the object that has the function to track time.
      * @cfg times.fnName {String} (required) the name of the function to track time.
      * @cfg times.logResult {Boolean} true to log the return value of the function.
@@ -553,7 +553,7 @@ Vlug.Interceptor.prototype = {
                 console.log(result);
             }
 
-            after.apply(this, arguments)
+            after.apply(this, arguments);
 
             return result;
         };
