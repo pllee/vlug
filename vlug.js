@@ -71,14 +71,14 @@
 
             return function(arr) {
                 return toString.call(arr) === '[object Array]';
-            }
+            };
         })();
 
         var arrayFrom = function(arrOrItem) {
                 if(Vlug.utils.Array.isArray(arrOrItem)) {
                     return arrOrItem;
                 }
-                return(typeof arrOrItem === 'undefined') ? [] : [arrOrItem]
+                return(typeof arrOrItem === 'undefined') ? [] : [arrOrItem];
             }
 
         var each = function(arrOrItem, fn, context) {
@@ -116,7 +116,7 @@
         })();
 
         var timeStamp = (function() {
-            if(typeof performance !== 'undefined'  && performance.now) {
+            if(typeof performance !== 'undefined' && performance.now) {
                 return function() {
                     return performance.now();
                 };
@@ -320,7 +320,7 @@
                     fn = functionOrObj.fn || functionOrObj;
                 } else {
                     name = 'index:' + index;
-                    fn = functionOrObj
+                    fn = functionOrObj;
                 }
 
                 this._runFunction(fn, name);
@@ -538,7 +538,7 @@
                     console.log(result);
                 }
 
-                after.apply(this, arguments)
+                after.apply(this, arguments);
 
                 return result;
             };
