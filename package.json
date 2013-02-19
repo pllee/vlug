@@ -1,8 +1,8 @@
 {
   "author": "Patrick Lee <pllee.github@gmail.com>",
   "name": "vlug",
-  "description": "A simple way to get performance timings in JavaScript.",
-  "version": "0.0.1",
+  "description": "Performance and other utilities that can help with JavaScript development.",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/pllee/vlug.git"

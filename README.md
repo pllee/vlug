@@ -1,7 +1,7 @@
 vlug
 ====
 
-Simple performance and other utilities that can help with JavaScript development.  
+Performance and other utilities that can help with JavaScript development.
 
 Vlug.Interceptor
 =
