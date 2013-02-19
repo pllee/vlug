@@ -7,11 +7,11 @@
     var context = this,
     oldVlug = context.Vlug;
 
-    Vlug = {};
+    context.Vlug = {};
 
     Vlug.noConflict = function() {
         context.Vlug = oldVlug;
-    }
+    };
 
     Vlug.initialContext = context;
 
@@ -21,8 +21,8 @@
                     from = f || {},
                     prop;
 
-                for(prop in from) {
-                    if(from.hasOwnProperty(prop)) {
+                for (prop in from) {
+                    if (from.hasOwnProperty(prop)) {
                         to[prop] = from[prop];
                     }
                 }
@@ -35,8 +35,8 @@
                     from = f,
                     prop;
 
-                for(prop in from) {
-                    if(from.hasOwnProperty(prop) && typeof to[prop] === 'undefined') {
+                for (prop in from) {
+                    if (from.hasOwnProperty(prop) && typeof to[prop] === 'undefined') {
                         to[prop] = from[prop];
                     }
                 }
@@ -46,7 +46,7 @@
 
         var forEach = (function() {
             var nativeForEach = Array.prototype.forEach;
-            if(nativeForEach) {
+            if (nativeForEach) {
                 return function(arr, fn, context) {
                     nativeForEach.call(arr, fn, context);
                 };
@@ -55,7 +55,7 @@
             return function(arr, fn, context) {
                 var i, len = arr.length;
 
-                for(i = 0; i < len; ++i) {
+                for (i = 0; i < len; ++i) {
                     fn.call(context || this, arr[i], i, arr);
                 }
 
@@ -65,7 +65,7 @@
 
         var isArray = (function() {
             var nativeIsArray = Array.isArray;
-            if(nativeIsArray) {
+            if (nativeIsArray) {
                 return nativeIsArray;
             }
 
@@ -75,22 +75,22 @@
         })();
 
         var arrayFrom = function(arrOrItem) {
-                if(Vlug.utils.Array.isArray(arrOrItem)) {
+                if (Vlug.utils.Array.isArray(arrOrItem)) {
                     return arrOrItem;
                 }
-                return(typeof arrOrItem === 'undefined') ? [] : [arrOrItem];
-            }
+                return (typeof arrOrItem === 'undefined') ? [] : [arrOrItem];
+            };
 
         var each = function(arrOrItem, fn, context) {
                 return forEach(arrayFrom(arrOrItem), fn, context);
-            }
+            };
 
         var con = (function() {
             var time = console.time,
                 timeEnd = console.timeEnd,
                 timeIds;
 
-            if(!time) {
+            if (!time) {
                 timeIds = {};
                 time = function(id) {
                     timeIds[id] = new Date();
@@ -112,11 +112,11 @@
             return {
                 time: time,
                 timeEnd: timeEnd
-            }
+            };
         })();
 
         var timeStamp = (function() {
-            if(typeof performance !== 'undefined' && performance.now) {
+            if (typeof performance !== 'undefined' && performance.now) {
                 return function() {
                     return performance.now();
                 };
@@ -142,7 +142,7 @@
             },
             mixins: {},
             abstractFn: function() {
-                throw new Error('abstractFn must be implemented')
+                throw new Error('abstractFn must be implemented');
             },
             emptyFn: function() {}
         });
@@ -152,14 +152,14 @@
     Vlug.mixins.TimeTracker = {
         stampStart: function(id) {
             this._initTimes();
-            if(this.log) {
+            if (this.log) {
                 Vlug.utils.console.time(id);
             }
             this._timeStamps[id] = Vlug.utils.timeStamp();
         },
 
         _initTimes: function() {
-            if(!this._timeStamps) {
+            if (!this._timeStamps) {
 
                 this._timeStamps = {};
 
@@ -170,13 +170,13 @@
             var start = this._timeStamps[id],
                 currentRunTime = Vlug.utils.timeStamp() - start;
             this._trackTime(id, currentRunTime);
-            if(this.log) {
+            if (this.log) {
                 Vlug.utils.console.timeEnd(id);
             }
         },
 
         _trackTime: function(id, runtime) {
-            if(!this._totalTimes[id]) {
+            if (!this._totalTimes[id]) {
                 this._totalTimes[id] = {
                     iterationsRun: 0,
                     totalTime: 0
@@ -195,8 +195,8 @@
         _buildReportObject: function() {
             var prop, report = {};
 
-            for(prop in this._totalTimes) {
-                if(this._totalTimes.hasOwnProperty(prop)) {
+            for (prop in this._totalTimes) {
+                if (this._totalTimes.hasOwnProperty(prop)) {
                     report[prop] = Vlug.utils.apply({}, this._totalTimes[prop]);
                     report[prop].average = report[prop].totalTime / report[prop].iterationsRun;
                 }
@@ -205,6 +205,7 @@
             return report;
         }
     };
+
     /**
      * @class Vlug.Runner
      * Runs a set of functions for n number of iterations
@@ -243,9 +244,9 @@
         });
 
         runner.run();
-        * would show console.time outputs to the console like: 
-        nativeForEach: 7.304ms 
-        VlugForEach: 8.032ms 
+        * would show console.time outputs to the console like:
+        nativeForEach: 7.304ms
+        VlugForEach: 8.032ms
         forLoop: 0.796ms
         *after calling run 2 more times runner.getReport() would return something like:
         {
@@ -279,12 +280,12 @@
 
         /**
          * @cfg {Function|Function[]|{}|{}[]} functions
-         functions can either be Functions or objects in the form of :
+         functions can either be functions or objects in the form of :
          *@cfg functions.name {String} the identifier name for the function
-         *@cfg functions.fn {Function} (required) the function to call 
+         *@cfg functions.fn {Function} (required) the function to call
          functions: {
                 fn: function() {
-                    var a, 
+                    var a,
                         arr = [1,2,3];
 
                     arr.forEach(function(value, index) {
@@ -293,7 +294,7 @@
                 },
                 name: 'forEach'
             }
-        *this is also a valid config: 
+        *this is also a valid config:
          functions: [function(){return 1;}, function(){return 2;}]
          */
         /**
@@ -308,7 +309,7 @@
 
         /**
         * @method run
-        * Runs the configured functions for the configured amount 
+        * Runs the configured functions for the configured amount
         * of iterations.  If log is true it will output console.time info
         */
         run: function() {
@@ -337,7 +338,7 @@
         _runFunctionForIterations: function(fn) {
             var iterations = this.iterations,
                 i = 0;
-            for(; i < iterations; ++i) {
+            for (; i < iterations; ++i) {
                 fn();
             }
         },
@@ -365,7 +366,7 @@
 
         /**
          * @method getReport
-         * Returns the time info for functions the 
+         * Returns the time info for functions the
          * run, they are keyed off by function name.  The time
          * info will may vary slightly from the console.time output.
          * @return {Object}
@@ -373,9 +374,10 @@
     };
 
     Vlug.utils.mix(Vlug.Runner.prototype, Vlug.mixins.TimeTracker);
+
     /**
      * @class Vlug.Interceptor
-     * Intercepts methods on objects to add time info and or console logs.
+     * Intercepts methods on objects to add time info, console logs or functions.
         var interceptor = new Vlug.Interceptor({
             logs: {
                 obj: Vlug.Runner.prototype,
@@ -388,7 +390,14 @@
             times: [{
                 obj: Vlug.Runner.prototype,
                 fnName: 'run'
-            }]
+            }],
+            functions: {
+                obj: Vlug.Runner.prototype,
+                fnName: 'run',
+                before: function() {
+                    window.alert('running ....')
+                }
+            }
         }),
         v = new Vlug.Runner({
             log: false,
@@ -397,15 +406,15 @@
 
         *v.run('a') would output something like
         running ...
-        first call arg a 
+        first call arg a
         //This is from the times
-        run: 14.539ms 
-        
+        run: 14.539ms
+
         *interceptor.getReport() would output something like:
         { run:
             {"iterationsRun":1,"totalTime":14.53899999614805,"average":14.53899999614805}
         }
-        *after calling interceptor.restore() 
+        *after calling interceptor.restore()
         * the methods will be restored back to their original states.
      */
     Vlug.Interceptor = function(config) {
@@ -415,13 +424,13 @@
     Vlug.Interceptor.prototype = {
         /**
          * @cfg {{}| {}[]} logs
-         * An object or Array of objects in with the following properties
+         * An object or array of objects with the following properties
          * @cfg logs.obj {Object} (required) the object that has the function to show logs.
          * @cfg logs.fnName {String} (required) the name of the function to show logs.
          * @cfg logs.before {String|Function} the console output to log before the function is called.
          * @cfg logs.after {String|Function} the console output to log after the function is called.
          * @cfg logs.logResult {Boolean} true to log the return value of the function.
-         * 
+         *
          *For example this would log <br>
          *"running .." before run is called <br>
          * and <br>
@@ -438,24 +447,35 @@
          }
 
          */
-        
+
         /**
          * @cfg {{}| {}[]} times
-         * An object or Array of objects in with the following properties
+         * An object or array of objects with the following properties
          * @cfg times.obj {Object} (required) the object that has the function to track time.
          * @cfg times.fnName {String} (required) the name of the function to track time.
          * @cfg times.logResult {Boolean} true to log the return value of the function.
          */
 
-        init:function(config) {
+        /**
+         * @cfg {{}| {}[]} functions
+         * An object or array of objects with the following properties
+         * @cfg functions.obj {Object} (required) the object with the function to override.
+         * @cfg functions.fnName {String} (required) the name of the function.
+         * @cfg functions.before {Function} function to call before the original function has been called.
+         * @cfg functions.after {Function} function to call after the original function has been called.
+         * @cfg functions.logResult {Boolean} true to log the return value of the function.
+         */
+
+        init: function(config) {
             Vlug.utils.apply(this, Vlug.utils.apply(config, {log: true}));
             this._restoreFns = [];
             this._initLogs();
             this._initTimeLogs();
+            this._initFunctions();
         },
 
         _initLogs: function() {
-            Vlug.utils.Array.each(this.logs, function(interceptConfig){
+            Vlug.utils.Array.each(this.logs, function(interceptConfig) {
                 this._intercept(this._createLogInterceptConfig(interceptConfig));
             }, this);
         },
@@ -469,11 +489,11 @@
         },
 
         _logToFn: function(stringOrFn) {
-            if(typeof stringOrFn === 'function') {
+            if (typeof stringOrFn === 'function') {
                 return function() {
                     console.log(stringOrFn.apply(this, arguments));
                 };
-            } else if(typeof stringOrFn !== 'undefined') {
+            } else if (typeof stringOrFn !== 'undefined') {
                 return function() {
                     console.log(stringOrFn);
                 };
@@ -486,21 +506,21 @@
             Vlug.utils.Array.each(this.times, function(config, index, arr) {
                 var timeConfig = this._createTimeConfig(config, this._hasDuplicateName(config)
                     ? config.fnName + index : config.fnName);
-                
+
                 this._intercept(timeConfig);
             }, this);
         },
 
-        _hasDuplicateName: function(cfg){
+        _hasDuplicateName: function(cfg) {
             var i = 0,
                 arr = this.times,
                 len = arr.length,
                 name = cfg.fnName,
                 c;
 
-            for(; i < len; ++i) {
+            for (; i < len; ++i) {
                 c = arr[i];
-                if(c !== cfg && c.fnName === name) {
+                if (c !== cfg && c.fnName === name) {
                     return true;
                 }
             }
@@ -509,13 +529,31 @@
         _createTimeConfig: function(cfg, id) {
             var me = this;
             return Vlug.utils.apply(cfg, {
-                before: function(){
+                before: function() {
                     me.stampStart(id);
                 },
-                after: function(){
+                after: function() {
                     me.stampEnd(id);
                 }
-            })
+            });
+        },
+
+        _initFunctions: function() {
+            Vlug.utils.Array.each(this.functions, function(functionConfig) {
+                this._intercept(this._createFunctionInterceptConfig(functionConfig));
+            }, this);
+        },
+
+        _createFunctionInterceptConfig: function(c) {
+            var config = Vlug.utils.apply({}, c);
+            if (!config.before) {
+                config.before = Vlug.emptyFn;
+            }
+            if (!config.after) {
+                config.after = Vlug.emptyFn;
+            }
+
+            return config;
         },
 
         _intercept: function(interceptConfig) {
@@ -525,16 +563,16 @@
                 before = interceptConfig.before,
                 after = interceptConfig.after,
                 logResult = interceptConfig.logResult;
-                
+
 
             object[fnName] = function() {
                 var result;
 
                 before.apply(this, arguments);
-                
+
                 result = oldFn.apply(this, arguments);
-                
-                if(logResult) {
+
+                if (logResult) {
                     console.log(result);
                 }
 
@@ -553,7 +591,7 @@
          * states.
          */
         restore: function() {
-            Vlug.utils.Array.forEach(this._restoreFns.reverse(), function(fn){
+            Vlug.utils.Array.forEach(this._restoreFns.reverse(), function(fn) {
                 fn();
             }, this);
         },
@@ -565,7 +603,7 @@
 
         /**
          * @method getReport
-         * Returns the time info for functions the 
+         * Returns the time info for functions the
          * run, they are keyed off by function name.  The time
          * info will may vary slightly from the console.time output.
          * This will only show info if {@link Vlug.Interceptor#times times } are defined.
@@ -575,8 +613,9 @@
 
     Vlug.utils.mix(Vlug.Interceptor.prototype, Vlug.mixins.TimeTracker);
 
-    if(typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+
+    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         module.exports = Vlug;
-    }
+}
 
 })();
