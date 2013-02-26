@@ -313,7 +313,7 @@
         * of iterations.  If log is true it will output console.time info
         */
         run: function() {
-            Vlug.utils.Array.forEach(this.functions, function(functionOrObj, index) {
+            Vlug.utils.Array.each(this.functions, function(functionOrObj, index) {
                 var name = functionOrObj.name,
                 fn;
 
