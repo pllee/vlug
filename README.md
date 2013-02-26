@@ -4,7 +4,7 @@ vlug
 Performance and other utilities that can help with JavaScript development.
 
 Vlug.Interceptor
-=
+===
 Intercepts methods on objects to add time info or console logs or functions that will get called before and after the intercepted method is called.  Info on functions can be obtained without putting log statements in your source code or libraries.  Time logs keep track of how many times a function has been called and how long it has run for.  When put on the prototype of a class this can be useful information to have without having to dig through and have the overhead of a profiler.  Functions can be used to add a quick breakpoint on a child class instead of doing a conditional breakpoint of:
 
 ```js
@@ -60,7 +60,7 @@ interceptor.getReport() would output something like:
 Check out the [docs](http://pllee.github.com/vlug/docs/#!/api/Vlug.Interceptor) for full documentation.
 
 Vlug.Runner
-=
+===
 
 Runs a set of functions for n number of iterations and keeps time info on the set of functions.  This can be used for getting time comparisons. 
 
